@@ -54,6 +54,11 @@ app.get('/books/:id', (req, res) => {
         }
     }
 
+    // handling error response, if id on req.params is not found 
+    if (book === undefined) {
+       return res.status(404).json({ status: 'failed', message: `data book with id ${id} is not found` })
+    }
+
     // provide a response to client
     res.json({ status: 'ok', data: book })
 })
