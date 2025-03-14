@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const port = 3333
 
+app.use(express.json())
+
 // array data was representation as database
 const books = [
     { id: 1, title: 'node.js', description: 'learning node js for beginner' },
@@ -56,11 +58,30 @@ app.get('/books/:id', (req, res) => {
 
     // handling error response, if id on req.params is not found 
     if (book === undefined) {
-       return res.status(404).json({ status: 'failed', message: `data book with id ${id} is not found` })
+        return res.status(404).json({ status: 'failed', message: `data book with id ${id} is not found` })
     }
 
     // provide a response to client
     res.json({ status: 'ok', data: book })
+})
+
+//  endpoint /books with post
+app.post('/books', (req, res) => {
+    // get request body
+    const { title, description } = req.body
+    // debug
+    console.log(title, description)
+
+    //  get new id
+    const lastItemBookId = books[books.length - 1].id
+    const newIdBook = lastItemBookId + 1
+
+    // add new book
+    const newBookData = { id: newIdBook, title: title, description: description }
+    books.push(newBookData)
+
+    // return response to client
+    res.status(201).json({ status: 'ok', message: 'new book data successfully added', data: newBookData })
 })
 
 app.get('/users/:id', (req, res) => {
