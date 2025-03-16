@@ -23,31 +23,7 @@ app.get('/', (req, res) => {
 
 
 
-// get data from books database array/json based on id
-app.get('/books/:id', (req, res) => {
-    // get its req params
-    const { id } = req.params
-
-    let book
-    // processing data or loop data books
-    for (let i = 0; i < books.length; i++) {
-
-        // looping, if books with index [n] === id from req.params, so save on variable book
-        if (books[i].id === Number(id)) {
-            book = books[i]
-        }
-    }
-
-    // handling error response, if id on req.params is not found 
-    if (book === undefined) {
-        return res.status(404).json({ status: 'failed', message: `data book with id ${id} is not found` })
-    }
-
-    // provide a response to client
-    res.json({ status: 'ok', data: book })
-})
-
-//  endpoint /books with post
+//  endpoint create data /books with post
 app.post('/books', (req, res) => {
     // get request body
     const { title, description } = req.body

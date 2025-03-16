@@ -8,19 +8,45 @@ const books = [
     { id: 6, title: 'express.js', description: 'learning express js for beginner' },
 ]
 
-const findAllBooks= (req,res) =>{
+// create function findAllBooks, return using request & response
+const findAllBooks = (req, res) => {
     // get data from database
     const data = books
-    
+
     // provide response data in json format
     const result = {
         status: 'ok',
         data: data
     }
-    
+
     res.json({ result })
 
 }
 
-// creat result findAllBooks, then export to router
-module.exports={findAllBooks}
+//create function getBookById
+const getBookById = (req, res) => {
+    // get its req params
+    const { id } = req.params
+
+    let book
+    // processing data or loop data books
+    for (let i = 0; i < books.length; i++) {
+
+        // looping, if books with index [n] === id from req.params, so save on variable book
+        if (books[i].id === Number(id)) {
+            book = books[i]
+        }
+    }
+
+    // handling error response, if id on req.params is not found 
+    if (book === undefined) {
+        return res.status(404).json({ status: 'failed', message: `data book with id ${id} is not found` })
+    }
+
+    // provide a response to client
+    res.json({ status: 'ok', data: book })
+}
+
+
+// create result findAllBooks & getBookById, then export to router
+module.exports = { findAllBooks, getBookById }
