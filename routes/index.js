@@ -1,11 +1,14 @@
-const { findAllBooks, getBookById } = require('../controller/booksController')
+const { findAllBooks, getBookById, createNewBook } = require('../controller/booksController')
 
 const router = require('express').Router()
 
-// create route endpoint /books with handler function findAllBooks on controller
+// create router endpoint /books with handler function findAllBooks on controller
 router.get('/books', findAllBooks)
 
-// create route endpoint /books with handler function getBookById on controller
+// create router endpoint /books with handler function getBookById on controller
 router.get('/books/:id', getBookById)
+
+// create router endpoint /books to create new data book with handler function ... on controller
+router.post('/books', createNewBook)
 
 module.exports = router

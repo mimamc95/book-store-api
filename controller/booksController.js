@@ -47,6 +47,25 @@ const getBookById = (req, res) => {
     res.json({ status: 'ok', data: book })
 }
 
+// create function createNewBook
+const createNewBook = (req, res) => {
+    // get request body
+    const { title, description } = req.body
+    // debug
+    console.log(title, description)
+
+    //  get new id
+    const lastItemBookId = books[books.length - 1].id
+    const newIdBook = lastItemBookId + 1
+
+    // add new book
+    const newBookData = { id: newIdBook, title: title, description: description }
+    books.push(newBookData)
+
+    // return response to client
+    res.status(201).json({ status: 'ok', message: 'new book data successfully added', data: newBookData })
+}
+
 
 // create result findAllBooks & getBookById, then export to router
-module.exports = { findAllBooks, getBookById }
+module.exports = { findAllBooks, getBookById, createNewBook }
