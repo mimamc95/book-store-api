@@ -44,26 +44,33 @@ const getBookById = async (req, res) => {
     } catch (error) {
         console.log(error, '<<< Error find book by id')
     }
-     
+
 }
 
 // create function createNewBook
-const createNewBook = (req, res) => {
-    // get request body
-    const { title, description } = req.body
-    // debug
-    console.log(title, description)
+const createNewBook = async (req, res) => {
 
-    //  get new id
-    const lastItemBookId = books[books.length - 1].id
-    const newIdBook = lastItemBookId + 1
+    try {
+        // get request body
+        const { title, description } = req.body
 
-    // add new book
-    const newBookData = { id: newIdBook, title: title, description: description }
-    books.push(newBookData)
+        const newBook = await Book.create({ title: title, description: description })
 
-    // return response to client
-    res.status(201).json({ status: 'ok', message: 'new book data successfully added', data: newBookData })
+        res.status(201).json({
+            status: 'ok',
+            data: {
+                id: newBook.id,
+                title: newBook.title,
+                description: newBook.description,
+                createdAt: newBook.createdAt,
+                updatedAt: newBook.updatedAt
+            }
+        })
+
+    } catch (error) {
+        console.log(error, '<<< Error create new book')
+    }
+
 }
 
 
