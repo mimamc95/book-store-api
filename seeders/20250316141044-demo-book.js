@@ -4,7 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
 
-    return queryInterface.bulkInsert('books', [
+    return queryInterface.bulkInsert('Books', [
       {
         title: 'Node JS',
         description: 'Learning Node JS for beginner',
@@ -16,6 +16,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('books', null, {});
+    return queryInterface.bulkDelete('Books', null, {});
   }
 };

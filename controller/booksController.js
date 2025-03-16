@@ -1,50 +1,50 @@
-// array data was representation as database
-const books = [
-    { id: 1, title: 'node.js', description: 'learning node js for beginner' },
-    { id: 2, title: 'next.js', description: 'learning next js for beginner' },
-    { id: 3, title: 'js', description: 'learning js for beginner' },
-    { id: 4, title: 'python', description: 'learning python for beginner' },
-    { id: 5, title: 'C#', description: 'learning C# for beginner' },
-    { id: 6, title: 'express.js', description: 'learning express js for beginner' },
-]
+//  create models Book
+const { Book } = require('../models')
 
 // create function findAllBooks, return using request & response
-const findAllBooks = (req, res) => {
-    // get data from database
-    const data = books
+const findAllBooks = async (req, res) => {
+    try {
+        // request data from database
+        const data = await Book.findAll()
+        const result = {
+            status: 'ok',
+            data: data
+        }
 
-    // provide response data in json format
-    const result = {
-        status: 'ok',
-        data: data
+        // response data from database
+        res.json(result)
+
+    } catch (error) {
+        console.log(error, '<<< Error find all books')
+
     }
-
-    res.json({ result })
-
 }
 
 //create function getBookById
-const getBookById = (req, res) => {
-    // get its req params
-    const { id } = req.params
+const getBookById = async (req, res) => {
 
-    let book
-    // processing data or loop data books
-    for (let i = 0; i < books.length; i++) {
+    try {
+        const { id } = req.params
 
-        // looping, if books with index [n] === id from req.params, so save on variable book
-        if (books[i].id === Number(id)) {
-            book = books[i]
+        const data = await Book.findByPk(id)
+        console.log(data)
+        if (data === null) {
+            return res.status(404).json({
+                status: 'failed',
+                message: `data book with id ${id} is not found`
+            })
         }
-    }
 
-    // handling error response, if id on req.params is not found 
-    if (book === undefined) {
-        return res.status(404).json({ status: 'failed', message: `data book with id ${id} is not found` })
-    }
+        // if successfully
+        res.json({
+            status: 'ok',
+            data: data
+        })
 
-    // provide a response to client
-    res.json({ status: 'ok', data: book })
+    } catch (error) {
+        console.log(error, '<<< Error find book by id')
+    }
+     
 }
 
 // create function createNewBook
