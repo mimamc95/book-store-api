@@ -2,18 +2,12 @@ const express = require('express')
 
 const app = express()
 const port = 3333
+const router = require('./routes/index')
 
 app.use(express.json())
+app.use(router)
 
-// array data was representation as database
-const books = [
-    { id: 1, title: 'node.js', description: 'learning node js for beginner' },
-    { id: 2, title: 'next.js', description: 'learning next js for beginner' },
-    { id: 3, title: 'js', description: 'learning js for beginner' },
-    { id: 4, title: 'python', description: 'learning python for beginner' },
-    { id: 5, title: 'C#', description: 'learning C# for beginner' },
-    { id: 6, title: 'express.js', description: 'learning express js for beginner' },
-]
+
 
 // Tampilan di browser
 
@@ -27,19 +21,7 @@ app.get('/', (req, res) => {
     // res.send('hello world, ini aku sedang belajar express JS')
 })
 
-// create endpoint /books
-app.get('/books', (req, res) => {
-    // get data from database
-    const data = books
 
-    // provide response data in json format
-    const result = {
-        status: 'ok',
-        data: data
-    }
-
-    res.json({ result })
-})
 
 // get data from books database array/json based on id
 app.get('/books/:id', (req, res) => {
@@ -84,13 +66,6 @@ app.post('/books', (req, res) => {
     res.status(201).json({ status: 'ok', message: 'new book data successfully added', data: newBookData })
 })
 
-app.get('/users/:id', (req, res) => {
-
-    const { id } = req.params
-
-    // console.log(req.params)
-    res.send(`Ini response dari endpoint /users dengan id ${id}`)
-})
 
 // Tampilan di terminal
 app.listen(port, () => console.info(`server localhost running di port ${port}`))
