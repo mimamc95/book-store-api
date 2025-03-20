@@ -21,8 +21,10 @@ const registerUser = async (req, res, next) => {
                 email: newUser.email
             }
         })
+
+        // error handler next
     } catch (error) {
-next(error)
+        next(error)
     }
 }
 
