@@ -1,19 +1,10 @@
-const { findAllBooks, getBookById, createNewBook, updateBook, destroyBook } = require('../controller/booksController')
-
 const router = require('express').Router()
+const booksRouter = require('./booksRouter')
 
-// create router endpoint /books with handler function findAllBooks on controller
-router.get('/books', findAllBooks)
 
-// create router endpoint /books with handler function getBookById on controller
-router.get('/books/:id', getBookById)
+// create router pattern api/v1, api/v1 will accessed and then all content router on booksRouter will called & used
+router.use("/api/v1", booksRouter) //books router endpoint 
+// router.use("/api/v1", authorsRouter) 
 
-// create router endpoint /books to create new data book with handler function ... on controller
-router.post('/books', createNewBook)
 
-// create router endpoint /books for update
-router.patch('/books/:id', updateBook)
-
-// create router endpoint /books to delete data book with 
-router.delete('/books/:id', destroyBook)
 module.exports = router
