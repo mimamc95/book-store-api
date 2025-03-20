@@ -73,7 +73,7 @@ const createNewBook = async (req, res) => {
 
 }
 
-// create method for update data
+// create method for update data,using asynchronous & res req for handler
 const updateBook = async (req, res) => {
     try {
         //  get request params to get data book by id
@@ -81,8 +81,10 @@ const updateBook = async (req, res) => {
 
         //  get request req.body title & description for updated
         const { title, description } = req.body
-        const book = await Book.findByPk(id)
 
+        // connect and find data book by id
+        const book = await Book.findByPk(id)
+        // if book not found
         if (!book) {
             return res.status(404).json({
                 status: 'failed',
@@ -90,10 +92,10 @@ const updateBook = async (req, res) => {
             })
         }
 
-        // after get data, update this data
+        // after get data success, update this data
         book.title = title
         book.description = description
-        book.updatedAt=new Date()
+        book.updatedAt = new Date()
 
         // save updated data
         book.save()
