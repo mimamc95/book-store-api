@@ -102,8 +102,9 @@ const updateBook = async (req, res) => {
         book.description = description
         book.updatedAt = new Date()
 
-        // save updated data
-        book.save()
+        // validate & save updated data
+        await book.validate()
+        await book.save()
 
         // return response
         res.json({
@@ -118,7 +119,11 @@ const updateBook = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error, '<<< Error update book')
+        console.log(error.message, '<<< Error update book')
+        res.status(422).json({
+            status: 'failed',
+            errorMessage: error.message
+        })
     }
 }
 
