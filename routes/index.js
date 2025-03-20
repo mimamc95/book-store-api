@@ -1,4 +1,4 @@
-const { findAllBooks, getBookById, createNewBook, updateBook } = require('../controller/booksController')
+const { findAllBooks, getBookById, createNewBook, updateBook, destroyBook } = require('../controller/booksController')
 
 const router = require('express').Router()
 
@@ -14,5 +14,6 @@ router.post('/books', createNewBook)
 // create router endpoint /books for update
 router.patch('/books/:id', updateBook)
 
-
+// create router endpoint /books to delete data book with 
+router.delete('/books/:id', destroyBook)
 module.exports = router

@@ -113,9 +113,41 @@ const updateBook = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error, '<<< Error update data')
+        console.log(error, '<<< Error update book')
     }
 }
 
+// create method delete
+const destroyBook = async (req, res) => {
+    try {
+        //  get request params to get data book by id
+        const { id } = req.params
+
+        // connect and find data book by id
+        const book = await Book.findByPk(id)
+        // if book not found
+        if (!book) {
+            return res.status(404).json({
+                status: 'failed',
+                message: `data book with id ${id} is not exist`
+            })
+        }
+
+        // if book founded, destroy
+        book.destroy()
+
+        // return response
+        res.json({
+            status: 'ok',
+            message: `success delete book with id ${id}`
+        })
+
+
+    } catch (error) {
+        console.log(error, '<<< Error destroy book')
+    }
+}
+
+
 // create result findAllBooks & getBookById, then export to router
-module.exports = { findAllBooks, getBookById, createNewBook, updateBook }
+module.exports = { findAllBooks, getBookById, createNewBook, updateBook, destroyBook }
