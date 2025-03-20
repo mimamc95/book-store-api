@@ -3,12 +3,12 @@ const express = require('express')
 const app = express()
 const port = 3333
 const router = require('./routes/index')
+const errHandler = require('./middleware/errHandler')
 
 app.use(express.json())
 app.use(router)
+app.use(errHandler)
 
-/* Tampilan di browser
-*/
 
 //  GET, POST, PUT, PATCH, DELETE
 app.get('/', (req, res) => {

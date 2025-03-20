@@ -3,7 +3,7 @@ const { ValidationErrorItem } = require('sequelize')
 const { Book } = require('../models')
 
 // create function findAllBooks, return using request & response
-const findAllBooks = async (req, res) => {
+const findAllBooks = async (req, res, next) => {
     try {
         // request data from database
         const data = await Book.findAll()
@@ -16,13 +16,13 @@ const findAllBooks = async (req, res) => {
         res.json(result)
 
     } catch (error) {
-        console.log(error, '<<< Error find all books')
+        next(error)
 
     }
 }
 
 //create function getBookById
-const getBookById = async (req, res) => {
+const getBookById = async (req, res, next) => {
 
     try {
         const { id } = req.params
@@ -43,13 +43,13 @@ const getBookById = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error, '<<< Error find book by id')
+        next(error)
     }
 
 }
 
 // create function createNewBook
-const createNewBook = async (req, res) => {
+const createNewBook = async (req, res, next) => {
 
     try {
         // get request body
@@ -69,17 +69,13 @@ const createNewBook = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error.message, '<<< Error create new book')
-        res.status(422).json({
-            status: 'failed',
-            errorMessage: error.message
-        })
+        next(error)
     }
 
 }
 
 // create method for update data,using asynchronous & res req for handler
-const updateBook = async (req, res) => {
+const updateBook = async (req, res, next) => {
     try {
         //  get request params to get data book by id
         const { id } = req.params
@@ -119,16 +115,12 @@ const updateBook = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error.message, '<<< Error update book')
-        res.status(422).json({
-            status: 'failed',
-            errorMessage: error.message
-        })
+        next(error)
     }
 }
 
 // create method delete
-const destroyBook = async (req, res) => {
+const destroyBook = async (req, res, next) => {
     try {
         //  get request params to get data book by id
         const { id } = req.params
@@ -154,7 +146,7 @@ const destroyBook = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error, '<<< Error destroy book')
+        next(error)
     }
 }
 
