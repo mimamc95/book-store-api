@@ -15,6 +15,7 @@ const findAllBooks = async (req, res, next) => {
         // response data from database
         res.json(result)
 
+        // error handler next
     } catch (error) {
         next(error)
 
@@ -42,6 +43,7 @@ const getBookById = async (req, res, next) => {
             data: data
         })
 
+        // error handler next
     } catch (error) {
         next(error)
     }
@@ -68,6 +70,7 @@ const createNewBook = async (req, res, next) => {
             }
         })
 
+        // error handler next
     } catch (error) {
         next(error)
     }
@@ -114,6 +117,7 @@ const updateBook = async (req, res, next) => {
             }
         })
 
+        // error handler next
     } catch (error) {
         next(error)
     }
@@ -144,7 +148,7 @@ const destroyBook = async (req, res, next) => {
             message: `success delete book with id ${id}`
         })
 
-
+        // error handler next
     } catch (error) {
         next(error)
     }
