@@ -2,14 +2,13 @@
 const router = require('express').Router()
 // const { findAllBooks, getBookById, createNewBook, updateBook, destroyBook } = require('../controller/booksController')
 
+const { registerUser } = require("../controller/usersController")
 
 router.get('/', (req, res) => {
     res.send('Ini endpoint untuk get semua users')
 })// api/v1/users
 
-router.post('/', (req, res) => {
-    res.send('Ini endpoint untuk create user / registrasi user')
-})// api/v1/users
+router.post('/register', registerUser)// api/v1/users
 
 // create router endpoint /books with handler function findAllBooks on controller
 // router.get('/', findAllBooks)
