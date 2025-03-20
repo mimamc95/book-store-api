@@ -1,4 +1,5 @@
 //  create models Book
+const { ValidationErrorItem } = require('sequelize')
 const { Book } = require('../models')
 
 // create function findAllBooks, return using request & response
@@ -68,7 +69,11 @@ const createNewBook = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error, '<<< Error create new book')
+        console.log(error.message, '<<< Error create new book')
+        res.status(422).json({
+            status: 'failed',
+            errorMessage: error.message
+        })
     }
 
 }
